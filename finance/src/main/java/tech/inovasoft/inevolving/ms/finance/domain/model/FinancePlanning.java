@@ -15,8 +15,6 @@ import java.util.UUID;
 public class FinancePlanning {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
     private UUID idUser;
     private Double wage;
 
