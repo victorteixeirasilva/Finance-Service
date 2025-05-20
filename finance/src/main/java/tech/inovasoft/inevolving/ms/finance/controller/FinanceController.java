@@ -10,6 +10,7 @@ import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactio
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 import tech.inovasoft.inevolving.ms.finance.service.FinancePlanningService;
+import tech.inovasoft.inevolving.ms.finance.service.TransactionService;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -21,7 +22,10 @@ import java.util.concurrent.CompletableFuture;
 public class FinanceController {
 
     @Autowired
-    private FinancePlanningService service;
+    private FinancePlanningService planningService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Operation(
             summary = "Adds new financial planning to the user | Adiciona um novo planejamento financeiro ao usuário.",
@@ -31,7 +35,7 @@ public class FinanceController {
     @PostMapping("/{idUser}")
     public CompletableFuture<ResponseEntity> addPlanningWhenRegistering(@PathVariable("idUser") UUID idUser) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.addPlanningWhenRegistering(idUser))
+                ResponseEntity.ok(planningService.addPlanningWhenRegistering(idUser))
         );
     }
 
@@ -46,7 +50,7 @@ public class FinanceController {
             @RequestBody RequestUpdateWageDTO requestDTO
     ) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.updateWage(idUser, requestDTO.wage()))
+                ResponseEntity.ok(planningService.updateWage(idUser, requestDTO.wage()))
         );
     }
 
@@ -63,7 +67,7 @@ public class FinanceController {
             @RequestBody RequestTransactionDTO requestDTO
     ) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.addTransaction(idUser, requestDTO, Type.COST_OF_LIVING))
+                ResponseEntity.ok(transactionService.addTransaction(idUser, requestDTO, Type.COST_OF_LIVING))
         );
     }
 
@@ -80,7 +84,7 @@ public class FinanceController {
             @RequestBody RequestTransactionDTO requestDTO
     ) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.addTransaction(idUser, requestDTO, Type.INVESTMENT))
+                ResponseEntity.ok(transactionService.addTransaction(idUser, requestDTO, Type.INVESTMENT))
         );
     }
 
@@ -97,7 +101,7 @@ public class FinanceController {
             @RequestBody RequestTransactionDTO requestDTO
     ) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.addTransaction(idUser, requestDTO, Type.EXTRA_CONTRIBUTION))
+                ResponseEntity.ok(transactionService.addTransaction(idUser, requestDTO, Type.EXTRA_CONTRIBUTION))
         );
     }
 
@@ -113,7 +117,7 @@ public class FinanceController {
             @PathVariable("idTransaction") UUID idTransaction
     ) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.deleteTransaction(idUser, idTransaction))
+                ResponseEntity.ok(transactionService.deleteTransaction(idUser, idTransaction))
         );
     }
 
@@ -126,7 +130,7 @@ public class FinanceController {
     @GetMapping("/transaction/{idUser}/{idTransaction}")
     public CompletableFuture<ResponseEntity> getTransaction(UUID idUser, UUID idTransaction) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.getTransaction(idUser, idTransaction))
+                ResponseEntity.ok(transactionService.getTransaction(idUser, idTransaction))
         );
     }
 
@@ -144,7 +148,7 @@ public class FinanceController {
             LocalDate endDate
     ) {
         return CompletableFuture.completedFuture(
-                ResponseEntity.ok(service.getInfosFinanceInDateRange(idUser, startDate, endDate))
+                ResponseEntity.ok(planningService.getInfosFinanceInDateRange(idUser, startDate, endDate))
         );
     }
 
