@@ -6,6 +6,8 @@ import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactio
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseUserWageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -13,8 +15,10 @@ import java.util.UUID;
 @Service
 public class FinancePlanningService {
 
-    public ResponseMessageDTO addPlanningWhenRegistering(UUID idUser) {
-        //TODO: Criar Teste que falhe.
+    @Autowired
+    private FinancePlanningRepository financePlanningRepository;
+
+    public FinancePlanning addPlanningWhenRegistering(UUID idUser) {
         //TODO: Desenvolver método para o teste passar.
         //TODO: Refatorando código.
         return null;
