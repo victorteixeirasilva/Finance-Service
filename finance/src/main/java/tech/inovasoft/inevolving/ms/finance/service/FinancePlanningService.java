@@ -18,9 +18,13 @@ public class FinancePlanningService {
     @Autowired
     private FinancePlanningRepository financePlanningRepository;
 
+    /**
+     * @description - Adds a financial plan for the user | Adiciona um plano financeiro para o usuario.
+     * @param idUser - User id | Id do usuario
+     * @return - A financial plan for the user | Um plano financeiro para o usuario
+     */
     public FinancePlanning addPlanningWhenRegistering(UUID idUser) {
         return financePlanningRepository.savePlanningForUser(idUser);
-        //TODO: Refatorando código.
     }
 
     public ResponseUserWageDTO updateWage(UUID idUser, Double wage) {
