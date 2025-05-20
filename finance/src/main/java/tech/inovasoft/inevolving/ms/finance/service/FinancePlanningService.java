@@ -19,9 +19,8 @@ public class FinancePlanningService {
     private FinancePlanningRepository financePlanningRepository;
 
     public FinancePlanning addPlanningWhenRegistering(UUID idUser) {
-        //TODO: Desenvolver método para o teste passar.
+        return financePlanningRepository.savePlanningForUser(idUser);
         //TODO: Refatorando código.
-        return null;
     }
 
     public ResponseUserWageDTO updateWage(UUID idUser, Double wage) {
