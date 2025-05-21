@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
@@ -79,6 +80,35 @@ public class TransactionServiceSuccessTest {
         verify(planningRepository, times(1)).findById(idUser);
         verify(repository, times(1)).saveTransaction(newTransaction);
 
+    }
+
+    @Test
+    public void deleteTransaction() {
+        //Given
+        var idTransaction = UUID.randomUUID();
+        var idUser = UUID.randomUUID();
+
+        when(repository.findByIdAndIdUser(idTransaction, idUser))
+                .thenReturn(
+                        new Transaction(
+                                idTransaction,
+                                new FinancePlanning(idUser, 4500.0),
+                                "type",
+                                Date.valueOf(LocalDate.now()),
+                                "description",
+                                100.0
+                        )
+                );
+        when(repository.deleteTransaction(idTransaction)).thenReturn(new ResponseMessageDTO("Transaction deleted"));
+        var result = service.deleteTransaction(idTransaction, idUser);
+
+        //When
+        assertNotNull(result);
+        assertEquals("Transaction deleted", result.message());
+
+        //Then
+        verify(repository, times(1)).findByIdAndIdUser(idTransaction, idUser);
+        verify(repository, times(1)).deleteTransaction(idTransaction);
     }
 
 }

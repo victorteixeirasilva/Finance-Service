@@ -40,7 +40,6 @@ public class TransactionService {
     }
 
     public ResponseMessageDTO deleteTransaction(UUID idUser, UUID idTransaction) {
-        //TODO: Criar Teste que falhe.
         //TODO: Desenvolver método para o teste passar.
         //TODO: Refatorando código.
         return null;
