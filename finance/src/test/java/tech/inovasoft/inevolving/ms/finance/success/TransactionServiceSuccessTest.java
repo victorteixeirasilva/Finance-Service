@@ -108,4 +108,31 @@ public class TransactionServiceSuccessTest {
         assertEquals("Transaction deleted", result.message());
     }
 
+    @Test
+    public void getTransaction() {
+        //Given
+        var idTransaction = UUID.randomUUID();
+        var idUser = UUID.randomUUID();
+
+        var expectedTransaction = new Transaction(
+                idTransaction,
+                new FinancePlanning(idUser, 4500.0),
+                "type",
+                Date.valueOf(LocalDate.now()),
+                "description",
+                100.0
+        );
+
+        //When
+        when(repository.findByIdAndIdUser(any(), any())).thenReturn(expectedTransaction);
+        var result = service.getTransaction(idTransaction, idUser);
+
+
+        //Then
+        assertNotNull(result);
+        assertEquals(expectedTransaction.getId(), result.id());
+        assertEquals(expectedTransaction.getFinancePlanning().getIdUser(), result.idUser());
+        assertEquals(expectedTransaction.getType(), result.type());
+    }
+
 }
