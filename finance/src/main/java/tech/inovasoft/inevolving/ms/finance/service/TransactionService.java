@@ -58,9 +58,9 @@ public class TransactionService {
             UUID idUser,
             UUID idTransaction
     ) {
-        //TODO: Desenvolver método para o teste passar.
+        Transaction transaction = transactionRepository.findByIdAndIdUser(idTransaction, idUser);
+        return new ResponseTransactionDTO(transaction);
         //TODO: Refatorando código.
-        return null;
     }
 
 }
