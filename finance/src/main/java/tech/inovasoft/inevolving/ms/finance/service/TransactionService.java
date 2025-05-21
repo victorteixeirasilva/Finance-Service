@@ -20,6 +20,13 @@ public class TransactionService {
     @Autowired
     private FinancePlanningRepository financePlanningRepository;
 
+    /**
+     * @description - Creates a new transaction | Cria uma nova transação
+     * @param idUser - The id of the user | O id do usuário
+     * @param requestDTO - The transaction data | Os dados da transação
+     * @param type - The type of the transaction | O tipo da transação
+     * @return - The created transaction | A transação criada
+     */
     public ResponseTransactionDTO addTransaction(
             UUID idUser,
             RequestTransactionDTO requestDTO,
@@ -30,8 +37,6 @@ public class TransactionService {
         var newTransaction = new Transaction(planning, requestDTO, type);
 
         return new ResponseTransactionDTO(transactionRepository.saveTransaction(newTransaction));
-
-        //TODO: Refatorando código.
     }
 
     public ResponseMessageDTO deleteTransaction(UUID idUser, UUID idTransaction) {
