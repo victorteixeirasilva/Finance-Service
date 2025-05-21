@@ -54,13 +54,18 @@ public class TransactionService {
         return transactionRepository.deleteTransaction(transaction.getId());
     }
 
+    /**
+     * @description - Get a transaction | Obter uma transação
+     * @param idUser - The id of the user | O id do usuário
+     * @param idTransaction - The id of the transaction | O id da transação
+     * @return - The transaction | A transação
+     */
     public ResponseTransactionDTO getTransaction(
             UUID idUser,
             UUID idTransaction
     ) {
         Transaction transaction = transactionRepository.findByIdAndIdUser(idTransaction, idUser);
         return new ResponseTransactionDTO(transaction);
-        //TODO: Refatorando código.
     }
 
 }
