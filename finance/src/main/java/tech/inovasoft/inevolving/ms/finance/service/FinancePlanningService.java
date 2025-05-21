@@ -2,9 +2,7 @@ package tech.inovasoft.inevolving.ms.finance.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
-import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
-import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseUserWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
@@ -42,7 +40,11 @@ public class FinancePlanningService {
         return new ResponseUserWageDTO(newPlanning.getIdUser(), newPlanning.getWage());
     }
 
-    public ResponseFinanceInDateRangeDTO getInfosFinanceInDateRange(UUID idUser, LocalDate startDate, LocalDate endDate) {
+    public ResponseFinanceInDateRangeDTO getInfosFinanceInDateRange(
+            UUID idUser,
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
         //TODO: Criar Teste que falhe.
         //TODO: Desenvolver método para o teste passar.
         //TODO: Refatorando código.

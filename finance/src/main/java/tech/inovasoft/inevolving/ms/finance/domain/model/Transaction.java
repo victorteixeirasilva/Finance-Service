@@ -2,6 +2,7 @@ package tech.inovasoft.inevolving.ms.finance.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 
 import java.sql.Date;
 import java.util.UUID;
@@ -26,4 +27,11 @@ public class Transaction {
     private String descriptionTransaction;
     private Double amount;
 
+    public Transaction(FinancePlanning planning, RequestTransactionDTO requestDTO, String type) {
+        this.financePlanning = planning;
+        this.type = type;
+        this.transactionDate = Date.valueOf(requestDTO.date());
+        this.descriptionTransaction = requestDTO.description();
+        this.amount = requestDTO.value();
+    }
 }

@@ -1,6 +1,4 @@
-package tech.inovasoft.inevolving.ms.finance.service;
-
-import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
+package tech.inovasoft.inevolving.ms.finance.domain.dto.response;
 
 import java.util.List;
 import java.util.UUID;
