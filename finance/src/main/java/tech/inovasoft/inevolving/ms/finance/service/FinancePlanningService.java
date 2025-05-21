@@ -27,6 +27,12 @@ public class FinancePlanningService {
         return financePlanningRepository.savePlanningForUser(idUser);
     }
 
+    /**
+     * @description - Updates the wage of the user | Atualiza o salario do usuario
+     * @param idUser - User id | Id do usuario
+     * @param wage - Wage | Salario
+     * @return - A response with the updated wage | Uma resposta com o salario atualizado
+     */
     public ResponseUserWageDTO updateWage(UUID idUser, Double wage) {
         var planning = financePlanningRepository.findById(idUser);
 
@@ -34,7 +40,6 @@ public class FinancePlanningService {
         var newPlanning = financePlanningRepository.savePlanning(planning);
 
         return new ResponseUserWageDTO(newPlanning.getIdUser(), newPlanning.getWage());
-        //TODO: Refatorando código.
     }
 
     public ResponseFinanceInDateRangeDTO getInfosFinanceInDateRange(UUID idUser, LocalDate startDate, LocalDate endDate) {
