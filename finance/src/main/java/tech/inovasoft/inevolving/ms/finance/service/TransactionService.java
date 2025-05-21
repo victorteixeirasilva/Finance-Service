@@ -39,6 +39,12 @@ public class TransactionService {
         return new ResponseTransactionDTO(transactionRepository.saveTransaction(newTransaction));
     }
 
+    /**
+     * @description - Delete a transaction. | Deletar uma transação.
+     * @param idUser - The id of the user | O id do usuário
+     * @param idTransaction - The id of the transaction | O id da transação
+     * @return - Returns a confirmation that the transaction has been deleted. | Retorna uma confirmação de que a transação foi deletada.
+     */
     public ResponseMessageDTO deleteTransaction(
             UUID idUser,
             UUID idTransaction
@@ -46,7 +52,6 @@ public class TransactionService {
         Transaction transaction = transactionRepository.findByIdAndIdUser(idTransaction, idUser);
 
         return transactionRepository.deleteTransaction(transaction.getId());
-        //TODO: Refatorando código.
     }
 
     public ResponseTransactionDTO getTransaction(
