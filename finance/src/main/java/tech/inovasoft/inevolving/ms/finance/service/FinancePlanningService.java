@@ -28,9 +28,13 @@ public class FinancePlanningService {
     }
 
     public ResponseUserWageDTO updateWage(UUID idUser, Double wage) {
-        //TODO: Desenvolver método para o teste passar.
+        var planning = financePlanningRepository.findById(idUser);
+
+        planning.setWage(wage);
+        var newPlanning = financePlanningRepository.savePlanning(planning);
+
+        return new ResponseUserWageDTO(newPlanning.getIdUser(), newPlanning.getWage());
         //TODO: Refatorando código.
-        return null;
     }
 
     public ResponseFinanceInDateRangeDTO getInfosFinanceInDateRange(UUID idUser, LocalDate startDate, LocalDate endDate) {
