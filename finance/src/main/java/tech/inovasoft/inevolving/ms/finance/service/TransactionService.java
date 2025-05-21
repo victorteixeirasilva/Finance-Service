@@ -39,13 +39,20 @@ public class TransactionService {
         return new ResponseTransactionDTO(transactionRepository.saveTransaction(newTransaction));
     }
 
-    public ResponseMessageDTO deleteTransaction(UUID idUser, UUID idTransaction) {
-        //TODO: Desenvolver método para o teste passar.
+    public ResponseMessageDTO deleteTransaction(
+            UUID idUser,
+            UUID idTransaction
+    ) {
+        Transaction transaction = transactionRepository.findByIdAndIdUser(idTransaction, idUser);
+
+        return transactionRepository.deleteTransaction(transaction.getId());
         //TODO: Refatorando código.
-        return null;
     }
 
-    public ResponseTransactionDTO getTransaction(UUID idUser, UUID idTransaction) {
+    public ResponseTransactionDTO getTransaction(
+            UUID idUser,
+            UUID idTransaction
+    ) {
         //TODO: Criar Teste que falhe.
         //TODO: Desenvolver método para o teste passar.
         //TODO: Refatorando código.

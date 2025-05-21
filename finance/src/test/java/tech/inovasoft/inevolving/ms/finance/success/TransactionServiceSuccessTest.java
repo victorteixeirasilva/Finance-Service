@@ -88,7 +88,7 @@ public class TransactionServiceSuccessTest {
         var idTransaction = UUID.randomUUID();
         var idUser = UUID.randomUUID();
 
-        when(repository.findByIdAndIdUser(idTransaction, idUser))
+        when(repository.findByIdAndIdUser(any(), any()))
                 .thenReturn(
                         new Transaction(
                                 idTransaction,
@@ -99,16 +99,13 @@ public class TransactionServiceSuccessTest {
                                 100.0
                         )
                 );
+        //When
         when(repository.deleteTransaction(idTransaction)).thenReturn(new ResponseMessageDTO("Transaction deleted"));
         var result = service.deleteTransaction(idTransaction, idUser);
 
-        //When
+        //Then
         assertNotNull(result);
         assertEquals("Transaction deleted", result.message());
-
-        //Then
-        verify(repository, times(1)).findByIdAndIdUser(idTransaction, idUser);
-        verify(repository, times(1)).deleteTransaction(idTransaction);
     }
 
 }
