@@ -28,7 +28,6 @@ public class FinancePlanningService {
     }
 
     public ResponseUserWageDTO updateWage(UUID idUser, Double wage) {
-        //TODO: Criar Teste que falhe.
         //TODO: Desenvolver método para o teste passar.
         //TODO: Refatorando código.
         return null;

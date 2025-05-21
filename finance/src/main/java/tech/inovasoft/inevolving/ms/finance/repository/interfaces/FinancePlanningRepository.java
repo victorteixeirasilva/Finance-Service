@@ -6,4 +6,8 @@ import java.util.UUID;
 
 public interface FinancePlanningRepository {
     FinancePlanning savePlanningForUser(UUID idUser);
+
+    FinancePlanning findById(UUID idUser);
+
+    FinancePlanning savePlanning(FinancePlanning planning);
 }

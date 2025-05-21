@@ -13,8 +13,8 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FinancePlanningServiceSuccessTest {
@@ -43,6 +43,31 @@ public class FinancePlanningServiceSuccessTest {
         assertEquals(0.0, result.getWage());
 
         verify(repository).savePlanningForUser(idUser);
+    }
+
+    @Test
+    public void updateWage(){
+        //Given
+        var idUser = UUID.randomUUID();
+        var expectedFinancePlanning = new FinancePlanning();
+        expectedFinancePlanning.setIdUser(idUser);
+        expectedFinancePlanning.setWage(4300.0);
+
+        var oldFinancePlanning = new FinancePlanning();
+        oldFinancePlanning.setIdUser(idUser);
+        oldFinancePlanning.setWage(0.0);
+
+        //When
+        when(repository.findById(idUser)).thenReturn(oldFinancePlanning);
+        when(repository.savePlanning(any())).thenReturn(expectedFinancePlanning);
+        var result = service.updateWage(idUser, 4300.0);
+
+        //Then
+        assertNotNull(result);
+        assertEquals(result.wage(), expectedFinancePlanning.getWage());
+
+        verify(repository, times(1)).findById(idUser);
+        verify(repository, times(1)).savePlanning(any());
     }
 
 
