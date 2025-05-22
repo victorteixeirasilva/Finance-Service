@@ -48,6 +48,13 @@ public class FinancePlanningService {
         return new ResponseUserWageDTO(newPlanning.getIdUser(), newPlanning.getWage());
     }
 
+    /**
+     * @description - Returns the financial information of the user in a specific date range | Retorna as informacoes financeiras do usuario em um intervalo de datas
+     * @param idUser - User id | Id do usuario
+     * @param startDate - Start date | Data de inicio
+     * @param endDate - End date | Data de fim
+     * @return - A response with the financial information | Uma resposta com as informacoes financeiras
+     */
     public ResponseFinanceInDateRangeDTO getInfosFinanceInDateRange(
             UUID idUser,
             LocalDate startDate,
@@ -93,6 +100,5 @@ public class FinancePlanningService {
             transactionsInvestment,
             transactionsExtraBalance
         );
-        //TODO: Refatorando código.
     }
 }
