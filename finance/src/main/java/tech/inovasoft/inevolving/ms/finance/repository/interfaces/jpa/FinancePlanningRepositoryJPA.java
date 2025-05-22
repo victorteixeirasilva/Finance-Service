@@ -1,0 +1,10 @@
+package tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
+
+import java.util.UUID;
+
+public interface FinancePlanningRepositoryJPA extends JpaRepository<FinancePlanning, UUID> {
+
+}
