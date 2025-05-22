@@ -141,4 +141,108 @@ public class FinancePlanningServiceSuccessTest {
         verify(transactionRepository, times(1)).findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.EXTRA_CONTRIBUTION);
     }
 
+    @Test
+    public void getInfosFinanceInDateRangeWithMock(){
+        //Given
+        var idUser = UUID.randomUUID();
+        LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
+        LocalDate endDate = Date.valueOf("2025-05-31").toLocalDate();
+        Double wage = 3300.0;
+        Double totalBalance = 1504.57;
+        Double availableCostOfLivingBalance = 1174.57;
+        Double balanceAvailableToInvest = 330.0;
+        Double extraBalanceAdded = 0.0;
+
+        //When
+        when(repository.findById(idUser)).thenReturn(new FinancePlanning(idUser, wage));
+        List<Transaction> transactionsCostOfLivingDB = new ArrayList<>();
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                252.0
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                455.0
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                217.99
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                29.90
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                14.90
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                80.90
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                44.74
+        ));
+        transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                700.0
+        ));
+
+        when(transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.COST_OF_LIVING)).thenReturn(transactionsCostOfLivingDB);
+        List<Transaction> transactionsInvestmentDB = new ArrayList<>();
+        when(transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.INVESTMENT)).thenReturn(transactionsInvestmentDB);
+        List<Transaction> transactionsExtraAddedDB = new ArrayList<>();
+        when(transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.EXTRA_CONTRIBUTION)).thenReturn(transactionsExtraAddedDB);
+        var result = service.getInfosFinanceInDateRange(idUser, startDate, endDate);
+
+        //Then
+        assertNotNull(result);
+        assertEquals(wage, result.wage());
+        assertEquals(totalBalance, result.totalBalance());
+        assertEquals(availableCostOfLivingBalance, result.availableCostOfLivingBalance());
+        assertEquals(balanceAvailableToInvest, result.balanceAvailableToInvest());
+        assertEquals(extraBalanceAdded, result.extraBalanceAdded());
+        assertEquals(transactionsCostOfLivingDB.size(), result.transactionsCostOfLiving().size());
+        assertEquals(0, result.transactionsInvestment().size());
+        assertEquals(0, result.transactionsExtraAdded().size());
+
+        verify(repository, times(1)).findById(idUser);
+        verify(transactionRepository, times(1)).findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.COST_OF_LIVING);
+        verify(transactionRepository, times(1)).findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.INVESTMENT);
+        verify(transactionRepository, times(1)).findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.EXTRA_CONTRIBUTION);
+    }
+
 }

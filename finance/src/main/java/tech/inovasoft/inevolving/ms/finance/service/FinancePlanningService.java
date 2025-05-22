@@ -11,6 +11,8 @@ import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +31,9 @@ public class FinancePlanningService {
      * @param idUser - User id | Id do usuario
      * @return - A financial plan for the user | Um plano financeiro para o usuario
      */
-    public FinancePlanning addPlanningWhenRegistering(UUID idUser) {
+    public FinancePlanning addPlanningWhenRegistering(
+            UUID idUser
+    ) {
         return financePlanningRepository.savePlanningForUser(idUser);
     }
 
@@ -39,7 +43,10 @@ public class FinancePlanningService {
      * @param wage - Wage | Salario
      * @return - A response with the updated wage | Uma resposta com o salario atualizado
      */
-    public ResponseUserWageDTO updateWage(UUID idUser, Double wage) {
+    public ResponseUserWageDTO updateWage(
+            UUID idUser,
+            Double wage
+    ) {
         var planning = financePlanningRepository.findById(idUser);
 
         planning.setWage(wage);
@@ -61,7 +68,7 @@ public class FinancePlanningService {
             LocalDate endDate
     ) {
         var planning = financePlanningRepository.findById(idUser);
-        Double totalBalance = 0.0;
+        double totalBalance = 0.0;
         Double availableCostOfLivingBalance = planning.getWage()*0.9;
         Double balanceAvailableToInvest = planning.getWage()*0.1;
         Double extraBalanceAdded = 0.0;
@@ -89,13 +96,21 @@ public class FinancePlanningService {
 
         totalBalance = availableCostOfLivingBalance + balanceAvailableToInvest + extraBalanceAdded;
 
+        // Usar BigDecimal para manter duas casas decimais
+        BigDecimal bdTotalBalance = new BigDecimal(totalBalance).setScale(2, RoundingMode.HALF_UP);
+        double formattedTotalBalance = bdTotalBalance.doubleValue();
+
+        double formattedAvailableCostOfLivingBalance = new BigDecimal(availableCostOfLivingBalance).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        double formattedBalanceAvailableToInvest = new BigDecimal(balanceAvailableToInvest).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        double formattedExtraBalanceAdded = new BigDecimal(extraBalanceAdded).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
         return new ResponseFinanceInDateRangeDTO(
             idUser,
             planning.getWage(),
-            totalBalance,
-            availableCostOfLivingBalance,
-            balanceAvailableToInvest,
-            extraBalanceAdded,
+            formattedTotalBalance,
+            formattedAvailableCostOfLivingBalance,
+            formattedBalanceAvailableToInvest,
+            formattedExtraBalanceAdded,
             transactionsCostOfLiving,
             transactionsInvestment,
             transactionsExtraBalance
