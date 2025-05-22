@@ -98,7 +98,7 @@ public class FinancePlanningServiceSuccessTest {
                 UUID.randomUUID(),
                 idUser,
                 Date.valueOf("2025-05-02").toLocalDate(),
-                "Cost of Living",
+                Type.COST_OF_LIVING,
                 100.0,
                 Type.COST_OF_LIVING
             ));
@@ -107,6 +107,16 @@ public class FinancePlanningServiceSuccessTest {
         //When
         when(repository.findById(idUser)).thenReturn(new FinancePlanning(idUser, wage));
         List<Transaction> transactionsCostOfLivingDB = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            transactionsCostOfLivingDB.add(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, wage),
+                Type.COST_OF_LIVING,
+                Date.valueOf("2025-05-02"),
+                "description",
+                100.0
+            ));
+        }
         when(transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.COST_OF_LIVING)).thenReturn(transactionsCostOfLivingDB);
         List<Transaction> transactionsInvestmentDB = new ArrayList<>();
         when(transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.INVESTMENT)).thenReturn(transactionsInvestmentDB);

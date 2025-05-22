@@ -3,11 +3,16 @@ package tech.inovasoft.inevolving.ms.finance.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseUserWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
+import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
+import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,6 +20,9 @@ public class FinancePlanningService {
 
     @Autowired
     private FinancePlanningRepository financePlanningRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     /**
      * @description - Adds a financial plan for the user | Adiciona um plano financeiro para o usuario.
@@ -45,8 +53,46 @@ public class FinancePlanningService {
             LocalDate startDate,
             LocalDate endDate
     ) {
-        //TODO: Desenvolver método para o teste passar.
+        var planning = financePlanningRepository.findById(idUser);
+        Double totalBalance = 0.0;
+        Double availableCostOfLivingBalance = planning.getWage()*0.9;
+        Double balanceAvailableToInvest = planning.getWage()*0.1;
+        Double extraBalanceAdded = 0.0;
+
+        List<Transaction> transactionsCostOfLivingDb = transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.COST_OF_LIVING);
+        List<ResponseTransactionDTO> transactionsCostOfLiving = transactionsCostOfLivingDb.stream().map(ResponseTransactionDTO::new).toList();
+
+        for (Transaction transaction : transactionsCostOfLivingDb) {
+            availableCostOfLivingBalance -= transaction.getAmount();
+        }
+
+        List<Transaction> transactionsInvestmentDb = transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.INVESTMENT);
+        List<ResponseTransactionDTO> transactionsInvestment = transactionsInvestmentDb.stream().map(ResponseTransactionDTO::new).toList();
+
+        for (Transaction transaction : transactionsInvestmentDb) {
+            balanceAvailableToInvest -= transaction.getAmount();
+        }
+
+        List<Transaction> transactionsExtraBalanceDb = transactionRepository.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, Type.EXTRA_CONTRIBUTION);
+        List<ResponseTransactionDTO> transactionsExtraBalance = transactionsExtraBalanceDb.stream().map(ResponseTransactionDTO::new).toList();
+
+        for (Transaction transaction : transactionsExtraBalanceDb) {
+            extraBalanceAdded += transaction.getAmount();
+        }
+
+        totalBalance = availableCostOfLivingBalance + balanceAvailableToInvest + extraBalanceAdded;
+
+        return new ResponseFinanceInDateRangeDTO(
+            idUser,
+            planning.getWage(),
+            totalBalance,
+            availableCostOfLivingBalance,
+            balanceAvailableToInvest,
+            extraBalanceAdded,
+            transactionsCostOfLiving,
+            transactionsInvestment,
+            transactionsExtraBalance
+        );
         //TODO: Refatorando código.
-        return null;
     }
 }
