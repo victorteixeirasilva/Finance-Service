@@ -1,7 +1,10 @@
 package tech.inovasoft.inevolving.ms.finance.repository.interfaces;
 
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public interface FinancePlanningRepository {
@@ -10,4 +13,5 @@ public interface FinancePlanningRepository {
     FinancePlanning findById(UUID idUser);
 
     FinancePlanning savePlanning(FinancePlanning planning);
+
 }

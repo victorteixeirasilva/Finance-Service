@@ -11,6 +11,7 @@ public record ResponseFinanceInDateRangeDTO(
         Double balanceAvailableToInvest,
         Double extraBalanceAdded,
         List<ResponseTransactionDTO> transactionsCostOfLiving,
-        List<ResponseTransactionDTO> transactionsInvestment
+        List<ResponseTransactionDTO> transactionsInvestment,
+        List<ResponseTransactionDTO> transactionsExtraAdded
 ) {
 }
