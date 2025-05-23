@@ -2,6 +2,7 @@ package tech.inovasoft.inevolving.ms.finance.repository.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.TransactionRepositoryJPA;
@@ -16,10 +17,13 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
     private TransactionRepositoryJPA repositoryJPA;
 
     @Override
-    public Transaction saveTransaction(Transaction transaction) {
-        //TODO: Desenvolver método para o teste passar
+    public Transaction saveTransaction(Transaction transaction) throws DataBaseException {
+        try {
+            return repositoryJPA.save(transaction);
+        } catch (Exception e) {
+            throw new DataBaseException("(Transaction.save)");
+        }
         //TODO: Refatorar Código
-        return null;
     }
 
     @Override

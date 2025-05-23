@@ -1,7 +1,6 @@
 package tech.inovasoft.inevolving.ms.finance.repository.interfaces;
 
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
-import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 
 import java.time.LocalDate;
@@ -10,7 +9,7 @@ import java.util.UUID;
 
 public interface TransactionRepository {
 
-    Transaction saveTransaction(Transaction transaction) throws DataBaseException;
+    Transaction saveTransaction(Transaction transaction);
 
     Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser);
 

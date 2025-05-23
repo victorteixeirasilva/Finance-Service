@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
@@ -30,7 +31,7 @@ public class TransactionRepositorySuccessTest {
     private TransactionRepositoryImplementation transactionRepositoryImplementation;
 
     @Test
-    public void saveTransaction() {
+    public void saveTransaction() throws DataBaseException {
         //Given
         UUID id = UUID.randomUUID();
         FinancePlanning financePlanning = new FinancePlanning(UUID.randomUUID(), 1000.0);
