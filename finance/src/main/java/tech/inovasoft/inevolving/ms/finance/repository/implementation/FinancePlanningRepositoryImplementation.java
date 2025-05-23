@@ -21,9 +21,9 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
      * @return - New planning | Novo planejamento
      */
     @Override
-    public FinancePlanning savePlanningForUser(UUID idUser) {
+    public FinancePlanning savePlanningForUser(UUID idUser) throws DataBaseException {
         var newPlanning = new FinancePlanning(idUser, 0.0);
-        return repository.save(newPlanning); // TODO: Refatornar linha para usar o metodo FinancePlanningRepositoryImplementation.savePlanning()
+        return savePlanning(newPlanning);
     }
 
     /**
@@ -49,9 +49,12 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
     }
 
     @Override
-    public FinancePlanning savePlanning(FinancePlanning planning) {
-        //TODO: Desenvolver método para o teste passar
+    public FinancePlanning savePlanning(FinancePlanning planning) throws DataBaseException {
+        try {
+            return repository.save(planning);
+        } catch (Exception e) {
+            throw new DataBaseException("(save)");
+        }
         //TODO: Refatorar Código
-        return null;
     }
 }

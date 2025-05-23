@@ -29,7 +29,7 @@ public class FinancePlanningRepositorySuccessTest {
     private FinancePlanningRepositoryImplementation repository;
 
     @Test
-    public void savePlanningForUserSuccessTest() {
+    public void savePlanningForUserSuccessTest() throws DataBaseException {
         //Given
         var idUser = UUID.randomUUID();
         var planning = new FinancePlanning(
@@ -71,7 +71,7 @@ public class FinancePlanningRepositorySuccessTest {
     }
 
     @Test
-    public void savePlanning(){
+    public void savePlanning() throws DataBaseException {
         //Given
         var planning = new FinancePlanning(
                 UUID.randomUUID(),

@@ -35,7 +35,7 @@ public class FinancePlanningService {
      */
     public FinancePlanning addPlanningWhenRegistering(
             UUID idUser
-    ) {
+    ) throws DataBaseException {
         return financePlanningRepository.savePlanningForUser(idUser);
     }
 

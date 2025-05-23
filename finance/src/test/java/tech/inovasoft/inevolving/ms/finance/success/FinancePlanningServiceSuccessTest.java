@@ -39,7 +39,7 @@ public class FinancePlanningServiceSuccessTest {
     private FinancePlanningService service;
 
     @Test
-    public void addPlanningWhenRegistering(){
+    public void addPlanningWhenRegistering() throws DataBaseException {
         //Given
         var idUser = UUID.randomUUID();
         var expectedFinancePlanning = new FinancePlanning();

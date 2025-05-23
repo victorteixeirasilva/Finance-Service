@@ -12,10 +12,10 @@ import java.util.UUID;
 
 @Service
 public interface FinancePlanningRepository {
-    FinancePlanning savePlanningForUser(UUID idUser);
+    FinancePlanning savePlanningForUser(UUID idUser) throws DataBaseException;
 
     FinancePlanning findById(UUID idUser) throws DataBaseException, NotFoundFinancePlanning;
 
-    FinancePlanning savePlanning(FinancePlanning planning);
+    FinancePlanning savePlanning(FinancePlanning planning) throws DataBaseException;
 
 }
