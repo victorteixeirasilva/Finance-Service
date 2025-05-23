@@ -70,4 +70,24 @@ public class FinancePlanningRepositorySuccessTest {
         verify(jpaRepository).findById(idUser);
     }
 
+    @Test
+    public void savePlanning(){
+        //Given
+        var planning = new FinancePlanning(
+                UUID.randomUUID(),
+                1000.0
+        );
+
+        //When
+        when(jpaRepository.save(planning)).thenReturn(planning);
+        var result = repository.savePlanning(planning);
+
+        //Then
+        assertNotNull(result);
+        assertEquals(planning.getIdUser(), result.getIdUser());
+        assertEquals(planning.getWage(), result.getWage());
+
+        verify(jpaRepository).save(planning);
+    }
+
 }
