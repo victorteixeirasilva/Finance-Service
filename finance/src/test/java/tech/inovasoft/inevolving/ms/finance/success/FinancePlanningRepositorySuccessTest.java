@@ -9,6 +9,7 @@ import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.repository.implementation.FinancePlanningRepositoryImplementation;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.FinancePlanningRepositoryJPA;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,6 +45,27 @@ public class FinancePlanningRepositorySuccessTest {
         assertEquals(planning.getWage(), result.getWage());
 
         verify(jpaRepository).save(planning);
+    }
+
+    @Test
+    public void findByIdSuccessTest() {
+        //Given
+        var idUser = UUID.randomUUID();
+        var planning = new FinancePlanning(
+                idUser,
+                1000.0
+        );
+
+        //When
+        when(jpaRepository.findById(idUser)).thenReturn(Optional.of(planning));
+        var result = repository.findById(idUser);
+
+        //Then
+        assertNotNull(result);
+        assertEquals(planning.getIdUser(), result.getIdUser());
+        assertEquals(planning.getWage(), result.getWage());
+
+        verify(jpaRepository).findById(idUser);
     }
 
 }

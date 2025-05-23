@@ -25,7 +25,6 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
 
     @Override
     public FinancePlanning findById(UUID idUser) {
-        //TODO: Criar teste que falhe
         //TODO: Desenvolver método para o teste passar
         //TODO: Refatorar Código
         return null;
