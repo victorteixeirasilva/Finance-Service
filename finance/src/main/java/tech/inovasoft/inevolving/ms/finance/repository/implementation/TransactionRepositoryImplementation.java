@@ -16,6 +16,12 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
     @Autowired
     private TransactionRepositoryJPA repositoryJPA;
 
+    /**
+     * @description - Save a transaction | Salva uma transação
+     * @param transaction - Transaction | Transação
+     * @return - Transaction | Transação
+     * @throws DataBaseException - Database error | Erro no banco de dados
+     */
     @Override
     public Transaction saveTransaction(Transaction transaction) throws DataBaseException {
         try {
@@ -23,7 +29,6 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
         } catch (Exception e) {
             throw new DataBaseException("(Transaction.save)");
         }
-        //TODO: Refatorar Código
     }
 
     @Override
