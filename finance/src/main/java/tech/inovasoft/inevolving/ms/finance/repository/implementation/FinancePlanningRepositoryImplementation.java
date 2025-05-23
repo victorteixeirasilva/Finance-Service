@@ -48,6 +48,12 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
         }
     }
 
+    /**
+     * @description - Save a new planning | Salva um novo planejamento
+     * @param planning - Planning | Planejamento
+     * @return - Planning | Planejamento
+     * @throws DataBaseException - Database error | Erro no banco de dados
+     */
     @Override
     public FinancePlanning savePlanning(FinancePlanning planning) throws DataBaseException {
         try {
@@ -55,6 +61,5 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
         } catch (Exception e) {
             throw new DataBaseException("(save)");
         }
-        //TODO: Refatorar Código
     }
 }
