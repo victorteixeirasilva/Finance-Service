@@ -8,7 +8,6 @@ import java.util.UUID;
 public class FinancePlanningRepositoryImplementation implements FinancePlanningRepository {
     @Override
     public FinancePlanning savePlanningForUser(UUID idUser) {
-        //TODO: Criar teste que falhe
         //TODO: Desenvolver método para o teste passar
         //TODO: Refatorar Código
         return null;
