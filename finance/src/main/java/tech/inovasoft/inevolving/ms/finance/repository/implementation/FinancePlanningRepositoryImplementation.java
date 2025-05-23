@@ -26,6 +26,13 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
         return repository.save(newPlanning); // TODO: Refatornar linha para usar o metodo FinancePlanningRepositoryImplementation.savePlanning()
     }
 
+    /**
+     * @description - Find a planning by user id | Busca um planejamento pelo id do usuário
+     * @param idUser - User id | Id do usuário
+     * @return - Planning | Planejamento
+     * @throws DataBaseException - Database error | Erro no banco de dados
+     * @throws NotFoundFinancePlanning - Planning not found | Planejamento não encontrado
+     */
     @Override
     public FinancePlanning findById(UUID idUser) throws DataBaseException, NotFoundFinancePlanning {
         Optional<FinancePlanning> planningOptional;
@@ -39,7 +46,6 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
         } else {
             return planningOptional.get();
         }
-        //TODO: Refatorar Código
     }
 
     @Override
