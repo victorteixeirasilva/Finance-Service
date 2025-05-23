@@ -12,11 +12,15 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
     @Autowired
     private FinancePlanningRepositoryJPA repository;
 
+    /**
+     * @description - Save a new planning for user | Salva um novo planejamento para o usuário.
+     * @param idUser - User id | Id do usuário
+     * @return - New planning | Novo planejamento
+     */
     @Override
     public FinancePlanning savePlanningForUser(UUID idUser) {
         var newPlanning = new FinancePlanning(idUser, 0.0);
-        return repository.save(newPlanning);
-        //TODO: Refatorar Código
+        return repository.save(newPlanning); // TODO: Refatornar linha para usar o metodo FinancePlanningRepositoryImplementation.savePlanning()
     }
 
     @Override
