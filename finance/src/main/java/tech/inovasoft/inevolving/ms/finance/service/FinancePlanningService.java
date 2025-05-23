@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseUserWageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
@@ -46,7 +48,7 @@ public class FinancePlanningService {
     public ResponseUserWageDTO updateWage(
             UUID idUser,
             Double wage
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         var planning = financePlanningRepository.findById(idUser);
 
         planning.setWage(wage);
@@ -66,7 +68,7 @@ public class FinancePlanningService {
             UUID idUser,
             LocalDate startDate,
             LocalDate endDate
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         var planning = financePlanningRepository.findById(idUser);
         double totalBalance = 0.0;
         Double availableCostOfLivingBalance = planning.getWage()*0.9;

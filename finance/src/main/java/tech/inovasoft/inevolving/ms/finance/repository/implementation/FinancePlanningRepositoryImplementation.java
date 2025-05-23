@@ -1,10 +1,13 @@
 package tech.inovasoft.inevolving.ms.finance.repository.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.FinancePlanningRepositoryJPA;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class FinancePlanningRepositoryImplementation implements FinancePlanningRepository {
@@ -24,10 +27,19 @@ public class FinancePlanningRepositoryImplementation implements FinancePlanningR
     }
 
     @Override
-    public FinancePlanning findById(UUID idUser) {
-        //TODO: Desenvolver método para o teste passar
+    public FinancePlanning findById(UUID idUser) throws DataBaseException, NotFoundFinancePlanning {
+        Optional<FinancePlanning> planningOptional;
+        try {
+            planningOptional = repository.findById(idUser);
+        } catch (Exception e) {
+            throw new DataBaseException("(findById)");
+        }
+        if (planningOptional.isEmpty()) {
+            throw new NotFoundFinancePlanning();
+        } else {
+            return planningOptional.get();
+        }
         //TODO: Refatorar Código
-        return null;
     }
 
     @Override

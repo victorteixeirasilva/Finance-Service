@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
@@ -36,7 +38,7 @@ public class TransactionServiceSuccessTest {
     private TransactionService service;
 
     @Test
-    public void addTransaction() {
+    public void addTransaction() throws NotFoundFinancePlanning, DataBaseException {
         //Given
         UUID idUser = UUID.randomUUID();
         RequestTransactionDTO requestDTO = new RequestTransactionDTO(

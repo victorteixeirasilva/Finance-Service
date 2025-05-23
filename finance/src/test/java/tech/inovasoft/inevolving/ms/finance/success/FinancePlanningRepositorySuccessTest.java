@@ -5,6 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.repository.implementation.FinancePlanningRepositoryImplementation;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.FinancePlanningRepositoryJPA;
@@ -48,7 +50,7 @@ public class FinancePlanningRepositorySuccessTest {
     }
 
     @Test
-    public void findByIdSuccessTest() {
+    public void findByIdSuccessTest() throws NotFoundFinancePlanning, DataBaseException {
         //Given
         var idUser = UUID.randomUUID();
         var planning = new FinancePlanning(

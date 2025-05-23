@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 import tech.inovasoft.inevolving.ms.finance.service.FinancePlanningService;
 import tech.inovasoft.inevolving.ms.finance.service.TransactionService;
@@ -48,7 +50,7 @@ public class FinanceController {
     public CompletableFuture<ResponseEntity> updateWage(
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestUpdateWageDTO requestDTO
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(planningService.updateWage(idUser, requestDTO.wage()))
         );
@@ -65,7 +67,7 @@ public class FinanceController {
     public CompletableFuture<ResponseEntity> addTransactionCostOfLiving(
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestTransactionDTO requestDTO
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(transactionService.addTransaction(idUser, requestDTO, Type.COST_OF_LIVING))
         );
@@ -82,7 +84,7 @@ public class FinanceController {
     public CompletableFuture<ResponseEntity> addTransactionInvestment(
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestTransactionDTO requestDTO
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(transactionService.addTransaction(idUser, requestDTO, Type.INVESTMENT))
         );
@@ -99,7 +101,7 @@ public class FinanceController {
     public CompletableFuture<ResponseEntity> addTransactionExtraContribution(
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestTransactionDTO requestDTO
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(transactionService.addTransaction(idUser, requestDTO, Type.EXTRA_CONTRIBUTION))
         );
@@ -146,7 +148,7 @@ public class FinanceController {
             UUID idUser,
             LocalDate startDate,
             LocalDate endDate
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(planningService.getInfosFinanceInDateRange(idUser, startDate, endDate))
         );

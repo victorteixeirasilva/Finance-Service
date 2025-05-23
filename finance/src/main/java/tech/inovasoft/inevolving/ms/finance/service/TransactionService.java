@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
@@ -31,7 +33,7 @@ public class TransactionService {
             UUID idUser,
             RequestTransactionDTO requestDTO,
             String type
-    ) {
+    ) throws NotFoundFinancePlanning, DataBaseException {
         var planning = financePlanningRepository.findById(idUser);
 
         var newTransaction = new Transaction(planning, requestDTO, type);

@@ -1,6 +1,8 @@
 package tech.inovasoft.inevolving.ms.finance.repository.interfaces;
 
 import org.springframework.stereotype.Service;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 
@@ -12,7 +14,7 @@ import java.util.UUID;
 public interface FinancePlanningRepository {
     FinancePlanning savePlanningForUser(UUID idUser);
 
-    FinancePlanning findById(UUID idUser);
+    FinancePlanning findById(UUID idUser) throws DataBaseException, NotFoundFinancePlanning;
 
     FinancePlanning savePlanning(FinancePlanning planning);
 
