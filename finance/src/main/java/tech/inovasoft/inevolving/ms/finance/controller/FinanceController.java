@@ -16,7 +16,6 @@ import tech.inovasoft.inevolving.ms.finance.service.FinancePlanningService;
 import tech.inovasoft.inevolving.ms.finance.service.TransactionService;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
