@@ -78,6 +78,16 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
         return new ResponseMessageDTO("Transaction deleted successfully");
     }
 
+    /**
+     * @description - Find all transactions in a date range | Encontra todas as transações em um intervalo de datas
+     * @param idUser - Id of the user | Id do usuário
+     * @param startDate - Start date | Data de inicio
+     * @param endDate - End date | Data de fim
+     * @param type - Type of the transaction | Tipo da transação
+     * @return - List of transactions | Lista de transações
+     * @throws DataBaseException - Database error | Erro no banco de dados
+     * @throws NotFoundTransactionException - Transaction not found | Transação não encontrada
+     */
     @Override
     public List<Transaction> findAllTransactionsInDateRangeWithType(
             UUID idUser,
@@ -95,6 +105,5 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
             throw new NotFoundTransactionException();
         }
         return transactions;
-        //TODO: Refatorar Código
     }
 }
