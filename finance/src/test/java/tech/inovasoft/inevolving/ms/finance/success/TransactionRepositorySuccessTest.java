@@ -14,6 +14,7 @@ import tech.inovasoft.inevolving.ms.finance.repository.implementation.Transactio
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.TransactionRepositoryJPA;
 
 import java.sql.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,6 +64,29 @@ public class TransactionRepositorySuccessTest {
         assertEquals(expectedTransaction.getFinancePlanning().getWage(), result.getFinancePlanning().getWage());
 
         verify(transactionRepositoryJPA).save(expectedTransaction);
+    }
+
+    @Test
+    public void findByIdAndIdUser() {
+        //Given
+        var id = UUID.randomUUID();
+        var idUser = UUID.randomUUID();
+
+        var transaction = new Transaction();
+        transaction.setId(id);
+        transaction.setFinancePlanning(new FinancePlanning(idUser, 1000.0));
+
+
+        //When
+        when(transactionRepositoryJPA.findByIdAndIdUser(id, idUser)).thenReturn(Optional.of(transaction));
+        var result = transactionRepositoryImplementation.findByIdAndIdUser(id, idUser);
+
+        //Then
+        assertNotNull(result);
+        assertEquals(transaction.getId(), result.getId());
+        assertEquals(transaction.getFinancePlanning().getIdUser(), result.getFinancePlanning().getIdUser());
+
+        verify(transactionRepositoryJPA).findByIdAndIdUser(id, idUser);
     }
 
 }

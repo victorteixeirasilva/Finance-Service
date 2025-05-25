@@ -33,6 +33,7 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
 
     @Override
     public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser) {
+        //TODO: Criar teste que falhe
         //TODO: Desenvolver método para o teste passar
         //TODO: Refatorar Código
         return null;
