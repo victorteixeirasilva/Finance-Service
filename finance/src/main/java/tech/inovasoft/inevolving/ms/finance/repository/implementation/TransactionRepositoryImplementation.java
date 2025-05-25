@@ -33,6 +33,14 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
         }
     }
 
+    /**
+     * @description - Find a transaction by id | Encontra uma transação pelo id
+     * @param idTransaction - UUID | Id da transação
+     * @param idUser - UUID | Id do usuário
+     * @return - Transaction | Transação
+     * @throws DataBaseException - Database error | Erro no banco de dados
+     * @throws NotFoundTransactionException - Transaction not found | Transação não encontrada
+     */
     @Override
     public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser) throws DataBaseException, NotFoundTransactionException {
         Optional<Transaction> optionalTransaction;
@@ -45,7 +53,6 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
             throw new NotFoundTransactionException();
         }
         return optionalTransaction.get();
-        //TODO: Refatorar Código
     }
 
     @Override
