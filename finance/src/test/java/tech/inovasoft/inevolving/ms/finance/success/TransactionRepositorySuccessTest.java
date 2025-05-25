@@ -90,7 +90,7 @@ public class TransactionRepositorySuccessTest {
     }
 
     @Test
-    public void deleteTransaction() {
+    public void deleteTransaction() throws DataBaseException {
         //Given
         var id = UUID.randomUUID();
 
@@ -100,7 +100,7 @@ public class TransactionRepositorySuccessTest {
 
         //Then
         assertNotNull(result);
-        assertEquals("Transaction deleted", result.message());
+        assertEquals("Transaction deleted successfully", result.message());
 
         verify(transactionRepositoryJPA).deleteById(id);
 

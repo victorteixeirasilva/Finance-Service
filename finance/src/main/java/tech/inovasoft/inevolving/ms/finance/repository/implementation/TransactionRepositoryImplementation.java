@@ -56,11 +56,20 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
         return optionalTransaction.get();
     }
 
+    /**
+     * @description - Delete a transaction | Deleta uma transação
+     * @param idTransaction - Id of the transaction | Id da transação
+     * @return - Confirmation message | Confirmação de exclusão
+     * @throws DataBaseException - Database error | Erro no banco de dados
+     */
     @Override
-    public ResponseMessageDTO deleteTransaction(UUID idTransaction) {
-        //TODO: Desenvolver método para o teste passar
-        //TODO: Refatorar Código
-        return null;
+    public ResponseMessageDTO deleteTransaction(UUID idTransaction) throws DataBaseException {
+        try {
+            repositoryJPA.deleteById(idTransaction);
+        } catch (Exception e) {
+            throw new DataBaseException("(Transaction.deleteById)");
+        }
+        return new ResponseMessageDTO("Transaction deleted successfully");
     }
 
     @Override
