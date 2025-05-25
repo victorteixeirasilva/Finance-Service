@@ -7,6 +7,7 @@ import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageD
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.FinancePlanningRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
@@ -50,7 +51,7 @@ public class TransactionService {
     public ResponseMessageDTO deleteTransaction(
             UUID idUser,
             UUID idTransaction
-    ) {
+    ) throws NotFoundTransactionException, DataBaseException {
         Transaction transaction = transactionRepository.findByIdAndIdUser(idTransaction, idUser);
 
         return transactionRepository.deleteTransaction(transaction.getId());
@@ -65,7 +66,7 @@ public class TransactionService {
     public ResponseTransactionDTO getTransaction(
             UUID idUser,
             UUID idTransaction
-    ) {
+    ) throws NotFoundTransactionException, DataBaseException {
         Transaction transaction = transactionRepository.findByIdAndIdUser(idTransaction, idUser);
         return new ResponseTransactionDTO(transaction);
     }

@@ -10,6 +10,7 @@ import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactio
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 import tech.inovasoft.inevolving.ms.finance.service.FinancePlanningService;
 import tech.inovasoft.inevolving.ms.finance.service.TransactionService;
@@ -117,7 +118,7 @@ public class FinanceController {
     public CompletableFuture<ResponseEntity> deleteTransaction(
             @PathVariable("idUser") UUID idUser,
             @PathVariable("idTransaction") UUID idTransaction
-    ) {
+    ) throws NotFoundTransactionException, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(transactionService.deleteTransaction(idUser, idTransaction))
         );
@@ -130,7 +131,7 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @GetMapping("/transaction/{idUser}/{idTransaction}")
-    public CompletableFuture<ResponseEntity> getTransaction(UUID idUser, UUID idTransaction) {
+    public CompletableFuture<ResponseEntity> getTransaction(UUID idUser, UUID idTransaction) throws NotFoundTransactionException, DataBaseException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(transactionService.getTransaction(idUser, idTransaction))
         );

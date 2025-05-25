@@ -2,6 +2,7 @@ package tech.inovasoft.inevolving.ms.finance.repository.interfaces;
 
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public interface TransactionRepository {
 
     Transaction saveTransaction(Transaction transaction) throws DataBaseException;
 
-    Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser);
+    Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser) throws DataBaseException, NotFoundTransactionException;
 
     ResponseMessageDTO deleteTransaction(UUID idTransaction);
 

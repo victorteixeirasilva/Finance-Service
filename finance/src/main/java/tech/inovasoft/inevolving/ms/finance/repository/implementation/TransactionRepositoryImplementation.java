@@ -3,12 +3,14 @@ package tech.inovasoft.inevolving.ms.finance.repository.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.TransactionRepositoryJPA;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TransactionRepositoryImplementation implements TransactionRepository {
@@ -32,10 +34,18 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
     }
 
     @Override
-    public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser) {
-        //TODO: Desenvolver método para o teste passar
+    public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser) throws DataBaseException, NotFoundTransactionException {
+        Optional<Transaction> optionalTransaction;
+        try {
+            optionalTransaction = repositoryJPA.findByIdAndIdUser(idTransaction, idUser);
+        } catch (Exception e) {
+            throw new DataBaseException("(Transaction.findByIdAndIdUser)");
+        }
+        if (optionalTransaction.isEmpty()) {
+            throw new NotFoundTransactionException();
+        }
+        return optionalTransaction.get();
         //TODO: Refatorar Código
-        return null;
     }
 
     @Override

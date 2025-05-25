@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
@@ -67,7 +68,7 @@ public class TransactionRepositorySuccessTest {
     }
 
     @Test
-    public void findByIdAndIdUser() {
+    public void findByIdAndIdUser() throws NotFoundTransactionException, DataBaseException {
         //Given
         var id = UUID.randomUUID();
         var idUser = UUID.randomUUID();
