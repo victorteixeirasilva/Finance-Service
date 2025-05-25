@@ -42,7 +42,8 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
      * @throws NotFoundTransactionException - Transaction not found | Transação não encontrada
      */
     @Override
-    public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser) throws DataBaseException, NotFoundTransactionException {
+    public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser)
+            throws DataBaseException, NotFoundTransactionException {
         Optional<Transaction> optionalTransaction;
         try {
             optionalTransaction = repositoryJPA.findByIdAndIdUser(idTransaction, idUser);
@@ -57,7 +58,6 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
 
     @Override
     public ResponseMessageDTO deleteTransaction(UUID idTransaction) {
-        //TODO: Criar teste que falhe
         //TODO: Desenvolver método para o teste passar
         //TODO: Refatorar Código
         return null;

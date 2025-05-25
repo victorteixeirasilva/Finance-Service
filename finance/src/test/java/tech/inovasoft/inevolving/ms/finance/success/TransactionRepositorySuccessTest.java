@@ -20,8 +20,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionRepositorySuccessTest {
@@ -88,6 +87,23 @@ public class TransactionRepositorySuccessTest {
         assertEquals(transaction.getFinancePlanning().getIdUser(), result.getFinancePlanning().getIdUser());
 
         verify(transactionRepositoryJPA).findByIdAndIdUser(id, idUser);
+    }
+
+    @Test
+    public void deleteTransaction() {
+        //Given
+        var id = UUID.randomUUID();
+
+        //When
+        doNothing().when(transactionRepositoryJPA).deleteById(id);
+        var result = transactionRepositoryImplementation.deleteTransaction(id);
+
+        //Then
+        assertNotNull(result);
+        assertEquals("Transaction deleted", result.message());
+
+        verify(transactionRepositoryJPA).deleteById(id);
+
     }
 
 }
