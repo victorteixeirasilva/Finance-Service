@@ -25,7 +25,9 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
      * @throws DataBaseException - Database error | Erro no banco de dados
      */
     @Override
-    public Transaction saveTransaction(Transaction transaction) throws DataBaseException {
+    public Transaction saveTransaction(
+            Transaction transaction
+    ) throws DataBaseException {
         try {
             return repositoryJPA.save(transaction);
         } catch (Exception e) {
@@ -42,8 +44,10 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
      * @throws NotFoundTransactionException - Transaction not found | Transação não encontrada
      */
     @Override
-    public Transaction findByIdAndIdUser(UUID idTransaction, UUID idUser)
-            throws DataBaseException, NotFoundTransactionException {
+    public Transaction findByIdAndIdUser(
+            UUID idTransaction,
+            UUID idUser
+    ) throws DataBaseException, NotFoundTransactionException {
         Optional<Transaction> optionalTransaction;
         try {
             optionalTransaction = repositoryJPA.findByIdAndIdUser(idTransaction, idUser);
@@ -63,7 +67,9 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
      * @throws DataBaseException - Database error | Erro no banco de dados
      */
     @Override
-    public ResponseMessageDTO deleteTransaction(UUID idTransaction) throws DataBaseException {
+    public ResponseMessageDTO deleteTransaction(
+            UUID idTransaction
+    ) throws DataBaseException {
         try {
             repositoryJPA.deleteById(idTransaction);
         } catch (Exception e) {
@@ -73,7 +79,12 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
     }
 
     @Override
-    public List<Transaction> findAllTransactionsInDateRangeWithType(UUID idUser, LocalDate startDate, LocalDate endDate, String type) {
+    public List<Transaction> findAllTransactionsInDateRangeWithType(
+            UUID idUser,
+            LocalDate startDate,
+            LocalDate endDate,
+            String type
+    ) {
         //TODO: Criar teste que falhe
         //TODO: Desenvolver método para o teste passar
         //TODO: Refatorar Código

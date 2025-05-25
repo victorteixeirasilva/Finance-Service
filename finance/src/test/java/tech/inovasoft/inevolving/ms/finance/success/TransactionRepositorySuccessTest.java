@@ -15,6 +15,8 @@ import tech.inovasoft.inevolving.ms.finance.repository.implementation.Transactio
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.TransactionRepositoryJPA;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -103,6 +105,37 @@ public class TransactionRepositorySuccessTest {
         assertEquals("Transaction deleted successfully", result.message());
 
         verify(transactionRepositoryJPA).deleteById(id);
+
+    }
+
+    @Test
+    public void findAllTransactionsInDateRangeWithType() {
+        //Given
+        var idUser = UUID.randomUUID();
+        LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
+        LocalDate endDate = Date.valueOf("2025-05-31").toLocalDate();
+        String type = Type.COST_OF_LIVING;
+        List<Transaction> transactions = List.of(new Transaction(
+                UUID.randomUUID(),
+                new FinancePlanning(idUser, 1000.0),
+                type,
+                Date.valueOf("2025-05-23"),
+                "descriptionTransaction",
+                100.0
+        ));
+
+        //When
+        when(transactionRepositoryJPA
+                .findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, type))
+                .thenReturn(transactions);
+        var result = transactionRepositoryImplementation
+                .findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, type);
+
+        //Then
+        assertNotNull(result);
+        assertEquals(transactions.getFirst().getType(), result.getFirst().getType());
+
+        verify(transactionRepositoryJPA).findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, type);
 
     }
 
