@@ -5,6 +5,7 @@ import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -17,5 +18,5 @@ public interface TransactionRepository {
 
     ResponseMessageDTO deleteTransaction(UUID idTransaction) throws DataBaseException;
 
-    List<Transaction> findAllTransactionsInDateRangeWithType(UUID idUser, LocalDate startDate, LocalDate endDate, String type) throws DataBaseException, NotFoundTransactionException;
+    List<Transaction> findAllTransactionsInDateRangeWithType(UUID idUser, Date startDate, Date endDate, String type) throws DataBaseException, NotFoundTransactionException;
 }

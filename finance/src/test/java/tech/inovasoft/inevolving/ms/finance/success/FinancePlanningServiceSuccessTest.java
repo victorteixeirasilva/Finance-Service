@@ -88,8 +88,8 @@ public class FinancePlanningServiceSuccessTest {
     public void getInfosFinanceInDateRange() throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         //Given
         var idUser = UUID.randomUUID();
-        LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
-        LocalDate endDate = Date.valueOf("2025-05-31").toLocalDate();
+        Date startDate = Date.valueOf("2025-05-01");
+        Date endDate = Date.valueOf("2025-05-31");
         Double wage = 1300.0;
         Double totalBalance = 1000.0;
         Double availableCostOfLivingBalance = 870.0;
@@ -148,8 +148,8 @@ public class FinancePlanningServiceSuccessTest {
     public void getInfosFinanceInDateRangeWithMock() throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         //Given
         var idUser = UUID.randomUUID();
-        LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
-        LocalDate endDate = Date.valueOf("2025-05-31").toLocalDate();
+        Date startDate = Date.valueOf("2025-05-01");
+        Date endDate = Date.valueOf("2025-05-31");
         Double wage = 3300.0;
         Double totalBalance = 1504.57;
         Double availableCostOfLivingBalance = 1174.57;

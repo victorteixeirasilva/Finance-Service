@@ -1,6 +1,7 @@
 package tech.inovasoft.inevolving.ms.finance.repository.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
@@ -10,6 +11,7 @@ import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.FinancePla
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class FinancePlanningRepositoryImplementation implements FinancePlanningRepository {
 
     @Autowired

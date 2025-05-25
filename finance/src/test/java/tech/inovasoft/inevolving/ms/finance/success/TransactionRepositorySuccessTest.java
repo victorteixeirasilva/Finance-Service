@@ -112,8 +112,8 @@ public class TransactionRepositorySuccessTest {
     public void findAllTransactionsInDateRangeWithType() throws NotFoundTransactionException, DataBaseException {
         //Given
         var idUser = UUID.randomUUID();
-        LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
-        LocalDate endDate = Date.valueOf("2025-05-31").toLocalDate();
+        Date startDate = Date.valueOf("2025-05-01");
+        Date endDate = Date.valueOf("2025-05-31");
         String type = Type.COST_OF_LIVING;
         List<Transaction> transactions = List.of(new Transaction(
                 UUID.randomUUID(),

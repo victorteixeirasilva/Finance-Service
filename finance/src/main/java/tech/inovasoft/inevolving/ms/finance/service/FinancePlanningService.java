@@ -16,6 +16,7 @@ import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRep
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -67,8 +68,8 @@ public class FinancePlanningService {
      */
     public ResponseFinanceInDateRangeDTO getInfosFinanceInDateRange(
             UUID idUser,
-            LocalDate startDate,
-            LocalDate endDate
+            Date startDate,
+            Date endDate
     ) throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         var planning = financePlanningRepository.findById(idUser);
         double totalBalance = 0.0;

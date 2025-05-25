@@ -1,6 +1,7 @@
 package tech.inovasoft.inevolving.ms.finance.repository.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
@@ -8,11 +9,13 @@ import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.TransactionRepository;
 import tech.inovasoft.inevolving.ms.finance.repository.interfaces.jpa.TransactionRepositoryJPA;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class TransactionRepositoryImplementation implements TransactionRepository {
 
     @Autowired
@@ -91,8 +94,8 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
     @Override
     public List<Transaction> findAllTransactionsInDateRangeWithType(
             UUID idUser,
-            LocalDate startDate,
-            LocalDate endDate,
+            Date startDate,
+            Date endDate,
             String type
     ) throws DataBaseException, NotFoundTransactionException {
         List<Transaction> transactions;
@@ -100,9 +103,6 @@ public class TransactionRepositoryImplementation implements TransactionRepositor
             transactions = repositoryJPA.findAllTransactionsInDateRangeWithType(idUser, startDate, endDate, type);
         } catch (Exception e) {
             throw new DataBaseException("(Transaction.findAllTransactionsInDateRangeWithType)");
-        }
-        if (transactions.isEmpty()) {
-            throw new NotFoundTransactionException();
         }
         return transactions;
     }
