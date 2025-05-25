@@ -149,7 +149,7 @@ public class FinanceController {
             UUID idUser,
             LocalDate startDate,
             LocalDate endDate
-    ) throws NotFoundFinancePlanning, DataBaseException {
+    ) throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         return CompletableFuture.completedFuture(
                 ResponseEntity.ok(planningService.getInfosFinanceInDateRange(idUser, startDate, endDate))
         );

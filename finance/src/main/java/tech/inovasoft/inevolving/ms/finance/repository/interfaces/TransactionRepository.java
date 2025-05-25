@@ -17,5 +17,5 @@ public interface TransactionRepository {
 
     ResponseMessageDTO deleteTransaction(UUID idTransaction) throws DataBaseException;
 
-    List<Transaction> findAllTransactionsInDateRangeWithType(UUID idUser, LocalDate startDate, LocalDate endDate, String type);
+    List<Transaction> findAllTransactionsInDateRangeWithType(UUID idUser, LocalDate startDate, LocalDate endDate, String type) throws DataBaseException, NotFoundTransactionException;
 }

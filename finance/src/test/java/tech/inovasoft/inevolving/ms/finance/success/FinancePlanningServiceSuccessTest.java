@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
@@ -84,7 +85,7 @@ public class FinancePlanningServiceSuccessTest {
     }
 
     @Test
-    public void getInfosFinanceInDateRange() throws NotFoundFinancePlanning, DataBaseException {
+    public void getInfosFinanceInDateRange() throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         //Given
         var idUser = UUID.randomUUID();
         LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
@@ -144,7 +145,7 @@ public class FinancePlanningServiceSuccessTest {
     }
 
     @Test
-    public void getInfosFinanceInDateRangeWithMock() throws NotFoundFinancePlanning, DataBaseException {
+    public void getInfosFinanceInDateRangeWithMock() throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         //Given
         var idUser = UUID.randomUUID();
         LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();

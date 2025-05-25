@@ -109,7 +109,7 @@ public class TransactionRepositorySuccessTest {
     }
 
     @Test
-    public void findAllTransactionsInDateRangeWithType() {
+    public void findAllTransactionsInDateRangeWithType() throws NotFoundTransactionException, DataBaseException {
         //Given
         var idUser = UUID.randomUUID();
         LocalDate startDate = Date.valueOf("2025-05-01").toLocalDate();
