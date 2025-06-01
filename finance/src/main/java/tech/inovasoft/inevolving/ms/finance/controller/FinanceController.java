@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseUserWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
@@ -48,7 +50,7 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @PatchMapping("/wage/{idUser}")
-    public CompletableFuture<ResponseEntity> updateWage(
+    public CompletableFuture<ResponseEntity<ResponseUserWageDTO>> updateWage(
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestUpdateWageDTO requestDTO
     ) throws NotFoundFinancePlanning, DataBaseException {
