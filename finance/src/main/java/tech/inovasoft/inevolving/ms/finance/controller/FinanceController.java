@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseMessageDTO;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseUserWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.DataBaseException;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundFinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.exception.NotFoundTransactionException;
+import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 import tech.inovasoft.inevolving.ms.finance.service.FinancePlanningService;
 import tech.inovasoft.inevolving.ms.finance.service.TransactionService;
@@ -38,10 +41,12 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @PostMapping("/{idUser}")
-    public CompletableFuture<ResponseEntity> addPlanningWhenRegistering(@PathVariable("idUser") UUID idUser) throws DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(planningService.addPlanningWhenRegistering(idUser))
-        );
+    public CompletableFuture<ResponseEntity<FinancePlanning>> addPlanningWhenRegistering(
+            @PathVariable("idUser") UUID idUser
+    ) throws DataBaseException {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                planningService.addPlanningWhenRegistering(idUser)
+        ));
     }
 
     @Operation(
@@ -54,9 +59,9 @@ public class FinanceController {
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestUpdateWageDTO requestDTO
     ) throws NotFoundFinancePlanning, DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(planningService.updateWage(idUser, requestDTO.wage()))
-        );
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                planningService.updateWage(idUser, requestDTO.wage())
+        ));
     }
 
     @Operation(
@@ -67,12 +72,12 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @PostMapping("/transaction/cost_of_living")
-    public CompletableFuture<ResponseEntity> addTransactionCostOfLiving(
+    public CompletableFuture<ResponseEntity<ResponseTransactionDTO>> addTransactionCostOfLiving(
             @RequestBody RequestTransactionDTO requestDTO
     ) throws NotFoundFinancePlanning, DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(transactionService.addTransaction(requestDTO.idUser(), requestDTO, Type.COST_OF_LIVING))
-        );
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                transactionService.addTransaction(requestDTO.idUser(), requestDTO, Type.COST_OF_LIVING)
+        ));
     }
 
     @Operation(
@@ -83,12 +88,12 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @PostMapping("/transaction/investment")
-    public CompletableFuture<ResponseEntity> addTransactionInvestment(
+    public CompletableFuture<ResponseEntity<ResponseTransactionDTO>> addTransactionInvestment(
             @RequestBody RequestTransactionDTO requestDTO
     ) throws NotFoundFinancePlanning, DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(transactionService.addTransaction(requestDTO.idUser(), requestDTO, Type.INVESTMENT))
-        );
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                transactionService.addTransaction(requestDTO.idUser(), requestDTO, Type.INVESTMENT)
+        ));
     }
 
     @Operation(
@@ -99,12 +104,12 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @PostMapping("/transaction/extra_contribution")
-    public CompletableFuture<ResponseEntity> addTransactionExtraContribution(
+    public CompletableFuture<ResponseEntity<ResponseTransactionDTO>> addTransactionExtraContribution(
             @RequestBody RequestTransactionDTO requestDTO
     ) throws NotFoundFinancePlanning, DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(transactionService.addTransaction(requestDTO.idUser(), requestDTO, Type.EXTRA_CONTRIBUTION))
-        );
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                transactionService.addTransaction(requestDTO.idUser(), requestDTO, Type.EXTRA_CONTRIBUTION)
+        ));
     }
 
     @Operation(
@@ -114,13 +119,13 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @DeleteMapping("/transaction/{idUser}/{idTransaction}")
-    public CompletableFuture<ResponseEntity> deleteTransaction(
+    public CompletableFuture<ResponseEntity<ResponseMessageDTO>> deleteTransaction(
             @PathVariable("idUser") UUID idUser,
             @PathVariable("idTransaction") UUID idTransaction
     ) throws NotFoundTransactionException, DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(transactionService.deleteTransaction(idUser, idTransaction))
-        );
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                transactionService.deleteTransaction(idUser, idTransaction)
+        ));
     }
 
     @Operation(
@@ -130,10 +135,13 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @GetMapping("/transaction/{idUser}/{idTransaction}")
-    public CompletableFuture<ResponseEntity> getTransaction(UUID idUser, UUID idTransaction) throws NotFoundTransactionException, DataBaseException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(transactionService.getTransaction(idUser, idTransaction))
-        );
+    public CompletableFuture<ResponseEntity<ResponseTransactionDTO>> getTransaction(
+            UUID idUser,
+            UUID idTransaction
+    ) throws NotFoundTransactionException, DataBaseException {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                transactionService.getTransaction(idUser, idTransaction)
+        ));
     }
 
     @Operation(
@@ -144,14 +152,14 @@ public class FinanceController {
     )
     @Async("asyncExecutor")
     @GetMapping("/{idUser}/{startDate}/{endDate}")
-    public CompletableFuture<ResponseEntity> getInfosFinanceInDateRange(
+    public CompletableFuture<ResponseEntity<ResponseFinanceInDateRangeDTO>> getInfosFinanceInDateRange(
             UUID idUser,
             Date startDate,
             Date endDate
     ) throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
-        return CompletableFuture.completedFuture(
-                ResponseEntity.ok(planningService.getInfosFinanceInDateRange(idUser, startDate, endDate))
-        );
+        return CompletableFuture.completedFuture(ResponseEntity.ok(
+                planningService.getInfosFinanceInDateRange(idUser, startDate, endDate)
+        ));
     }
 
 }

@@ -1,4 +1,4 @@
-package tech.inovasoft.inevolving.ms.finance.success;
+package tech.inovasoft.inevolving.ms.finance.unit.success;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
