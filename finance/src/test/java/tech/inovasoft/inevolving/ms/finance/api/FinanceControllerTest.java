@@ -10,16 +10,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.patch;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -90,7 +94,34 @@ public class FinanceControllerTest {
 
     @Test
     public void addTransactionCostOfLiving_ok() {
-        //TODO: Desenvolver teste do End-Point
+        RequestTransactionDTO requestTransactionDTO = new RequestTransactionDTO(
+                idUser,
+                LocalDate.now(),
+                "description",
+                100.00
+        );
+
+        addPlanningWhenRegistering(idUser);
+
+        RequestSpecification requestSpecification = given()
+                .contentType(ContentType.JSON);
+
+        // Faz a requisição GET e armazena a resposta
+        ValidatableResponse response = requestSpecification
+                .body(requestTransactionDTO)
+                .when()
+                .post("http://localhost:" + port + "/ms/finance/transaction/cost_of_living")
+                .then();
+
+
+        // Valida a resposta
+        response.assertThat().statusCode(200).and()
+                .body("idUser", equalTo(idUser.toString())).and()
+                .body("id", notNullValue()).and()
+                .body("date", equalTo(LocalDate.now().toString())).and()
+                .body("description", equalTo(requestTransactionDTO.description())).and()
+                .body("type", equalTo(Type.COST_OF_LIVING));
+
     }
 
     @Test
