@@ -126,7 +126,33 @@ public class FinanceControllerTest {
 
     @Test
     public void addTransactionInvestment_ok() {
-        //TODO: Desenvolver teste do End-Point
+        RequestTransactionDTO requestTransactionDTO = new RequestTransactionDTO(
+                idUser,
+                LocalDate.now(),
+                "description",
+                100.00
+        );
+
+        addPlanningWhenRegistering(idUser);
+
+        RequestSpecification requestSpecification = given()
+                .contentType(ContentType.JSON);
+
+        // Faz a requisição GET e armazena a resposta
+        ValidatableResponse response = requestSpecification
+                .body(requestTransactionDTO)
+                .when()
+                .post("http://localhost:" + port + "/ms/finance/transaction/investment")
+                .then();
+
+
+        // Valida a resposta
+        response.assertThat().statusCode(200).and()
+                .body("idUser", equalTo(idUser.toString())).and()
+                .body("id", notNullValue()).and()
+                .body("date", equalTo(LocalDate.now().toString())).and()
+                .body("description", equalTo(requestTransactionDTO.description())).and()
+                .body("type", equalTo(Type.INVESTMENT));
     }
 
     @Test
