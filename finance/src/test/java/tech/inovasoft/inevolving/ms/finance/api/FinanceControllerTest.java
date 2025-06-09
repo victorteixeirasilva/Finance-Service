@@ -33,7 +33,7 @@ public class FinanceControllerTest {
     @LocalServerPort
     private int port;
 
-    private UUID idUser = UUID.randomUUID();
+    private final UUID idUser = UUID.randomUUID();
 
     private FinancePlanning addPlanningWhenRegistering(UUID idUser){
 
@@ -60,7 +60,6 @@ public class FinanceControllerTest {
 
         );
     }
-
 
     @Test
     public void addPlanningWhenRegistering_ok() {
