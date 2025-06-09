@@ -153,9 +153,9 @@ public class FinanceController {
     @Async("asyncExecutor")
     @GetMapping("/{idUser}/{startDate}/{endDate}")
     public CompletableFuture<ResponseEntity<ResponseFinanceInDateRangeDTO>> getInfosFinanceInDateRange(
-            UUID idUser,
-            Date startDate,
-            Date endDate
+            @PathVariable UUID idUser,
+            @PathVariable Date startDate,
+            @PathVariable Date endDate
     ) throws NotFoundFinancePlanning, DataBaseException, NotFoundTransactionException {
         return CompletableFuture.completedFuture(ResponseEntity.ok(
                 planningService.getInfosFinanceInDateRange(idUser, startDate, endDate)
