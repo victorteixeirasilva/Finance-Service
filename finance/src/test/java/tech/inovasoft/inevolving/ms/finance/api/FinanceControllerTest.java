@@ -3,7 +3,6 @@ package tech.inovasoft.inevolving.ms.finance.api;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,17 +11,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactionDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
-import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
-import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.patch;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
