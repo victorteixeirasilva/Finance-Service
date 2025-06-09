@@ -14,6 +14,7 @@ import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestTransactio
 import tech.inovasoft.inevolving.ms.finance.domain.dto.request.RequestUpdateWageDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.dto.response.ResponseFinanceInDateRangeDTO;
 import tech.inovasoft.inevolving.ms.finance.domain.model.FinancePlanning;
+import tech.inovasoft.inevolving.ms.finance.domain.model.Transaction;
 import tech.inovasoft.inevolving.ms.finance.domain.model.Type;
 
 import java.sql.Date;
@@ -187,12 +188,43 @@ public class FinanceControllerTest {
     }
 
     @Test
-    public void deleteTransaction_ok() {
-        //TODO: Desenvolver teste do End-Point
+    public void getTransaction_ok() {
+        RequestTransactionDTO requestTransactionDTO = new RequestTransactionDTO(
+                idUser,
+                LocalDate.now(),
+                "description",
+                100.00
+        );
+
+        var planning = addPlanningWhenRegistering(idUser);
+
+        RequestSpecification requestSpecification = given()
+                .contentType(ContentType.JSON);
+
+        // Faz a requisição GET e armazena a resposta
+        ValidatableResponse responseAdd = requestSpecification
+                .body(requestTransactionDTO)
+                .when()
+                .post("http://localhost:" + port + "/ms/finance/transaction/extra_contribution")
+                .then();
+
+        UUID idTransaction = UUID.fromString(responseAdd.extract().body().jsonPath().get("id"));
+
+
+        // Faz a requisição GET e armazena a resposta
+        ValidatableResponse response = requestSpecification
+                .when()
+                .get("http://localhost:" + port + "/ms/finance/transaction/" + planning.getIdUser() + "/" + idTransaction)
+                .then();
+
+
+        // Valida a resposta
+        response.assertThat().statusCode(200).and()
+                .body("id", equalTo(idTransaction.toString()));
     }
 
     @Test
-    public void getTransaction_ok() {
+    public void deleteTransaction_ok() {
         //TODO: Desenvolver teste do End-Point
     }
 

@@ -136,8 +136,8 @@ public class FinanceController {
     @Async("asyncExecutor")
     @GetMapping("/transaction/{idUser}/{idTransaction}")
     public CompletableFuture<ResponseEntity<ResponseTransactionDTO>> getTransaction(
-            UUID idUser,
-            UUID idTransaction
+            @PathVariable UUID idUser,
+            @PathVariable UUID idTransaction
     ) throws NotFoundTransactionException, DataBaseException {
         return CompletableFuture.completedFuture(ResponseEntity.ok(
                 transactionService.getTransaction(idUser, idTransaction)
