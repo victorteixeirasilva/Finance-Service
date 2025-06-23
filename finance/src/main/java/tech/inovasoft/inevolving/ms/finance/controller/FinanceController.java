@@ -54,7 +54,7 @@ public class FinanceController {
             description = "Returns the updated salary of the user | Retorna o salario do usuário atualizado."
     )
     @Async("asyncExecutor")
-    @PatchMapping("/wage/{idUser}")
+    @PutMapping("/wage/{idUser}")
     public CompletableFuture<ResponseEntity<ResponseUserWageDTO>> updateWage(
             @PathVariable("idUser") UUID idUser,
             @RequestBody RequestUpdateWageDTO requestDTO
