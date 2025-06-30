@@ -1,0 +1,13 @@
+services:
+  finance-service:
+    build:
+      context: .
+    container_name: finance-service
+#    ports:
+#      - "8093:8093"
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
