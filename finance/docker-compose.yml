@@ -3,8 +3,8 @@ services:
     build:
       context: .
     container_name: finance-service
-#    ports:
-#      - "8093:8093"
+    ports:
+      - "8093:8093"
     networks:
       - backend
 
