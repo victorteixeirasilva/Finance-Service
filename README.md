@@ -8,6 +8,9 @@
 
 **Finanças pessoais sob controle: uma API que transforma dados em decisões.**
 
+<img width="1536" height="1024" alt="Generatedimage_1774909454246" src="https://github.com/user-attachments/assets/9c6a6bc3-1333-4af4-a864-18243249a659" />
+
+
 ---
 
 ## Introdução e visão geral
